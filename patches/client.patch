@@ -1,0 +1,13 @@
+--- a/client.py	2017-12-05 18:09:02.000000000 +0300
++++ b/client.py	2017-12-05 17:50:14.430208462 +0300
+@@ -122,6 +122,10 @@
+     response.
+     """
+     if not str(response.status_code).startswith('2'):
++      try:
++        response.json()
++      except:
++        raise build_api_error(response, blob={'error': response.reason, 'error_description': response.reason})
+       raise build_api_error(response)
+     return response
+ 
